@@ -163,6 +163,17 @@ else ifeq ($(platform), miyoo)
 	fpic := -fPIC
 	CFLAGS += -mcpu=arm926ej-s
 
+# XYDDS
+else ifeq ($(platform), xydds)
+	TARGET := $(TARGET_NAME)_libretro.so
+	CC = /opt/xydds/usr/bin/arm-linux-gcc
+	CXX = /opt/xydds/usr/bin/arm-linux-g++
+	AR = /opt/xydds/usr/bin/arm-linux-ar
+	SHARED := -shared -Wl,--no-undefined -Wl,--version-script=$(CORE_DIR)/libretro/core/link.T
+	fpic := -fPIC
+	CFLAGS += -marm -mfpu=neon-vfpv4 -mfloat-abi=hard
+	CFLAGS += -DARM -mcpu=cortex-a7
+
 # Nintendo Game Cube
 else ifeq ($(platform), ngc)
    TARGET := $(TARGET_NAME)_libretro_ngc.a
